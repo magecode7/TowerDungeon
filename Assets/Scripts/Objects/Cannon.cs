@@ -20,7 +20,8 @@ public class Cannon : MonoBehaviour
 
             GameObject bullet = Instantiate(bulletPrefab, firePosition.position, firePosition.rotation, transform.parent);
 
-            bullet.GetComponent<Bullet>().Fire(firePosition.position, transform.rotation * Vector2.right * bulletStartSpeed);
+            Rigidbody2D rb =  bullet.GetComponent<Rigidbody2D>();
+            rb.velocity = transform.rotation * Vector2.right * bulletStartSpeed;
 
             if (fireEffect) fireEffect.Play();
             if (smokeEffect) smokeEffect.Play();

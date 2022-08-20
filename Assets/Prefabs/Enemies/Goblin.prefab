@@ -248,9 +248,23 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 1024
     offset: {x: 0, y: 0}
-    size: {x: 10, y: 2}
+    size: {x: 12, y: 4}
     direction: {x: 0, y: 0}
     distance: 0
+  wallSensor:
+    mask:
+      serializedVersion: 2
+      m_Bits: 7936
+    offset: {x: 0.5, y: 0}
+    direction: {x: 1, y: 0}
+    distance: 0.2
+  floorSensor:
+    mask:
+      serializedVersion: 2
+      m_Bits: 768
+    offset: {x: 0.7, y: -0.3}
+    direction: {x: 0, y: -1}
+    distance: 0.5
 --- !u!114 &5482072695524740640
 MonoBehaviour:
   m_ObjectHideFlags: 0
