@@ -1,25 +1,24 @@
-﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Damageable : MonoBehaviour, IDamagable
+public class Destroyable : MonoBehaviour, IDamagable
 {
     [SerializeField] private float maxHp = 1;
     [SerializeField] protected Timer cooldownTimer = new Timer();
     [SerializeField] private GameObject deathEffect = null;
-    [SerializeField] protected float shakeAmplitude = 0; 
-    [SerializeField] protected float shakeDuration = 0; 
+    [SerializeField] protected float shakeAmplitude = 0;
+    [SerializeField] protected float shakeDuration = 0;
 
     private float hp = 0;
 
     public bool Alive => hp > 0;
     public float MaxHealth { get => maxHp; set => maxHp = value; }
     public float Health { get => hp; set => hp = Mathf.Clamp(value, 0, MaxHealth); }
-    public Animator Animator { get; private set; }
     public Dropper Dropper { get; private set; }
 
     void Awake()
     {
-        Animator = GetComponent<Animator>();
         Dropper = GetComponent<Dropper>();
 
         Health = MaxHealth;
@@ -38,10 +37,7 @@ public class Damageable : MonoBehaviour, IDamagable
             if (!Alive)
             {
                 Die();
-                Animator.SetTrigger("Die");
             }
-
-            Animator.SetTrigger("TakeDamage");
         }
     }
 
@@ -50,9 +46,10 @@ public class Damageable : MonoBehaviour, IDamagable
     public void Die()
     {
         Health = 0;
-        gameObject.layer = 0;
 
         Dropper?.RealizeDrop();
         if (deathEffect) Instantiate(deathEffect, transform.position, Quaternion.identity, transform.parent);
+        Destroy(gameObject);
     }
+
 }

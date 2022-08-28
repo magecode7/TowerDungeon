@@ -6,8 +6,9 @@ public class GameCamera : Singleton<GameCamera>
 {
     private float shakeAmplitude = 1;
     private Timer shakeTimer = new Timer();
-    [SerializeField] private AnimationCurve moveCurve = new AnimationCurve();
+    private Timer focusTimer = new Timer();
     private Vector3 position;
+    private Vector3 focusPosition;
 
     void Awake()
     {
@@ -16,12 +17,13 @@ public class GameCamera : Singleton<GameCamera>
 
     void Update()
     {
-        //SetPosition(Vector2.Lerp(position, Player.player.transform.position, 0.01f));
-        if (!shakeTimer.IsOut)
-        {
-            transform.position = position + (Vector3)Random.insideUnitCircle * shakeAmplitude;
-        }
-        else transform.position = position;
+        position = !focusTimer.IsOut
+            ? Vector2.Lerp(position, focusPosition, 0.01f)
+            : Vector2.Lerp(position, Player.player.transform.position, 0.01f);
+
+        transform.position = !shakeTimer.IsOut 
+            ? position + (Vector3)Random.insideUnitCircle * shakeAmplitude 
+            : position;
     }
 
     public void Shake(float duration = 0.2f, float amplitude = 1)
@@ -33,19 +35,9 @@ public class GameCamera : Singleton<GameCamera>
         }
     }
 
-    public void SetPosition(Vector2 pos) => position = pos;
-
-    public void Move(Vector2 to, float time = 1) => StartCoroutine(MoveRoutine(to, time));
-
-    IEnumerator MoveRoutine(Vector2 to, float time)
+    public void Focus(Vector2 position, float duration)
     {
-        Vector2 from = position;
-        float startTime = Time.time;
-        while (Time.time - startTime <= time)
-        {
-            position = Vector2.Lerp(from, to, moveCurve.Evaluate((Time.time - startTime) / 2));
-            yield return null;
-        }
-        yield break;
+        focusTimer.Start(duration);
+        focusPosition = position;
     }
 }

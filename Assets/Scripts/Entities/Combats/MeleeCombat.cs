@@ -17,12 +17,14 @@ public class MeleeCombat : Combat
 
         foreach (var hit in hits)
         {
-            if (hit.transform.TryGetComponent(out Entity entity))
+            if (hit.transform.TryGetComponent(out IDamagable damageable))
+            {
+                damageable.TakeDamage(damage);
+            }
+            if (hit.transform.TryGetComponent(out Movement movement))
             {
                 Vector2 dir = hit.transform.position - transform.position;
-
-                entity.Damageable.TakeDamage(damage);
-                entity.Movement.Knockback(dir.normalized * knockback, stunTime);
+                movement.Knockback(dir.normalized * knockback, stunTime);
             }
         }
 

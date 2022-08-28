@@ -364,7 +364,7 @@ MonoBehaviour:
   sensor:
     mask:
       serializedVersion: 2
-      m_Bits: 2048
+      m_Bits: 2049
     offset: {x: 0.5, y: 0}
     size: {x: 2, y: 1.5}
     direction: {x: 0, y: 0}

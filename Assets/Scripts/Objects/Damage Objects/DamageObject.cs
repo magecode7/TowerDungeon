@@ -19,10 +19,13 @@ public class DamageObject : MonoBehaviour
         int layer = 1 << target.layer;
         if ((layer & mask) == layer)
         {
-            if (target.TryGetComponent(out Entity entity))
+            if (target.TryGetComponent(out IDamagable damagable))
             {
-                entity.Damageable.TakeDamage(damage);
-                entity.Movement.Knockback((target.transform.position - transform.position).normalized * knockback, stunTime);
+                damagable.TakeDamage(damage);
+            }
+            if (target.TryGetComponent(out Movement movement))
+            {
+                movement.Knockback((target.transform.position - transform.position).normalized * knockback, stunTime);
             }
         }
     }
