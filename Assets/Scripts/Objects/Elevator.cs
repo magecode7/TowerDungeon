@@ -60,7 +60,7 @@ public class Elevator : MonoBehaviour, IInteractive
         yield return new WaitForSeconds(1);
 
         Room next = RoomsGenerator.I.GenerateNextRoom();
-        GameCamera.I.Focus(next.transform.position, 2);
+        //GameCamera.I.Focus(next.transform.position, 2);
         next.elevator.Up();
         entity.transform.position = next.elevator.point.position;
 

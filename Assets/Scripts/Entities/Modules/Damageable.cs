@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Damageable : MonoBehaviour, IDamagable
 {
@@ -7,7 +8,10 @@ public class Damageable : MonoBehaviour, IDamagable
     [SerializeField] protected Timer cooldownTimer = new Timer();
     [SerializeField] private GameObject deathEffect = null;
     [SerializeField] protected float shakeAmplitude = 0; 
-    [SerializeField] protected float shakeDuration = 0; 
+    [SerializeField] protected float shakeDuration = 0;
+    [SerializeField] private AudioClip damageSound;
+
+    [HideInInspector] public UnityEvent dieEvent = new UnityEvent();
 
     private float hp = 0;
 
@@ -33,6 +37,8 @@ public class Damageable : MonoBehaviour, IDamagable
 
             Health -= damage;
 
+            SoundManager.I.Play(damageSound);
+
             GameCamera.I.Shake(shakeDuration, shakeAmplitude);
 
             if (!Alive)
@@ -54,5 +60,7 @@ public class Damageable : MonoBehaviour, IDamagable
 
         Dropper?.RealizeDrop();
         if (deathEffect) Instantiate(deathEffect, transform.position, Quaternion.identity, transform.parent);
+
+        dieEvent.Invoke();
     }
 }

@@ -14,6 +14,8 @@ public class Money : Collectable
             if (playerHit.transform.TryGetComponent(out Player player))
             {
                 player.Money += moneyCount;
+                SoundManager.I.Play(collectSound);
+
                 Destroy(gameObject);
             }
         }

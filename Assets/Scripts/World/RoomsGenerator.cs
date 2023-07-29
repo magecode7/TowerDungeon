@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class RoomsGenerator : Singleton<RoomsGenerator>
+public class RoomsGenerator : MonoBehaviour
 {
     public int maxCount = 10;
     [TextArea]
@@ -20,8 +20,12 @@ public class RoomsGenerator : Singleton<RoomsGenerator>
     private int currentRoomNumber = 0;
     private Room currentRoom;
 
+    public static RoomsGenerator I;
+
     void Awake()
     {
+        I = this;
+
         startRoomsPrefabs = Resources.LoadAll<Room>(startRoomsPath);
         battleRoomsPrefabs = Resources.LoadAll<Room>(battleRoomsPath);
         specialRoomsPrefabs = Resources.LoadAll<Room>(specialRoomsPath);

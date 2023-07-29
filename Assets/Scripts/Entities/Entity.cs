@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Entity : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Entity : MonoBehaviour
     public Combat Combat { get; private set; }
     public Rigidbody2D RB { get; private set; }
     public bool CanDo => Damageable.Alive && !Movement.IsStunned;
+
 
     protected virtual void Awake()
     {

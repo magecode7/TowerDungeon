@@ -33,6 +33,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                 return _instance;
             }
         }
+        set => _instance = value;
     }
 
     public virtual void OnDestroy()

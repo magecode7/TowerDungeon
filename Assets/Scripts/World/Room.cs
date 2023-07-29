@@ -24,10 +24,9 @@ public class Room : MonoBehaviour
 
     public void CheckEnemies()
     {
-        bool has = false;
         if (playerSensor.Cast(transform.position))
         {
-            has = enemiesSensor.Cast(transform.position);
+            bool has = enemiesSensor.Cast(transform.position);
 
             elevator.SetOpened(!has);
         }

@@ -2,21 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameCamera : Singleton<GameCamera>
+public class GameCamera : MonoBehaviour
 {
     private float shakeAmplitude = 1;
     private Timer shakeTimer = new Timer();
     private Timer focusTimer = new Timer();
     private Vector3 position;
     private Vector3 focusPosition;
+    private bool teleport = true;
+
+    public static GameCamera I;
 
     void Awake()
     {
+        I = this;
+
         position = transform.position;
     }
 
     void Update()
     {
+        if (teleport)
+        {
+            position = Player.player.transform.position;
+            teleport = false;
+        }
         position = !focusTimer.IsOut
             ? Vector2.Lerp(position, focusPosition, 0.01f)
             : Vector2.Lerp(position, Player.player.transform.position, 0.01f);

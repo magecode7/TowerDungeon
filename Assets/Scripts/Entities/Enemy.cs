@@ -23,7 +23,12 @@ public class Enemy : Entity
                 if (direction.x > 0.1f) Move(Vector2.right);
                 if (direction.x < -0.1f) Move(Vector2.left);
 
-                if (direction.y > 1) Jump();
+                if (direction.y > 1 && direction.sqrMagnitude < 9) Jump();
+                else
+                {
+                    RaycastHit2D wallHit = wallSensor.Cast(transform.position);
+                    if (wallHit) Jump();
+                }
             }
         else
         {

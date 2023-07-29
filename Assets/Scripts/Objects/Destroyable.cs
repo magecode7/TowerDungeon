@@ -9,6 +9,7 @@ public class Destroyable : MonoBehaviour, IDamagable
     [SerializeField] private GameObject deathEffect = null;
     [SerializeField] protected float shakeAmplitude = 0;
     [SerializeField] protected float shakeDuration = 0;
+    [SerializeField] private AudioClip damageSound;
 
     private float hp = 0;
 
@@ -32,6 +33,8 @@ public class Destroyable : MonoBehaviour, IDamagable
 
             Health -= damage;
 
+            if (damageSound) SoundManager.I.Play(damageSound);
+            
             GameCamera.I.Shake(shakeDuration, shakeAmplitude);
 
             if (!Alive)

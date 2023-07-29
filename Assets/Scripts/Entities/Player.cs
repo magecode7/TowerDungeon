@@ -31,6 +31,8 @@ public class Player : Entity
         player = this;
 
         DashMovement = (DashMovement)Movement;
+
+        Damageable.dieEvent.AddListener(() => EventManager.I.CallPlayerDied());
     }
 
     protected override void FixedUpdate()

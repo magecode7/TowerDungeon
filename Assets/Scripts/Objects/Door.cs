@@ -6,11 +6,11 @@ public class Door : MonoBehaviour, IInteractive
 {
     [SerializeField] private bool opened = true;
     [SerializeField] private Transform point = null;
+    [SerializeField] private Door another = null;
 
     Animator animator;
 
     public Room Room { get; set; }
-    public Door Another { get; set; }
 
     void Awake()
     {
@@ -21,10 +21,10 @@ public class Door : MonoBehaviour, IInteractive
 
     public void SetPath(Door door)
     {
-        if (Another != door)
+        if (another != door)
         {
-            Another = door;
-            Another.SetPath(this);
+            another = door;
+            another.SetPath(this);
         }
     }
 
@@ -32,14 +32,23 @@ public class Door : MonoBehaviour, IInteractive
     {
         opened = open;
 
-        animator.SetBool("Opened", opened);
+        animator.SetBool("Opened", open);
     }
 
     public void OnInteract(Entity entity)
     {
-        if (opened && Another)
+        if (opened && another)
         {
-            entity.transform.position = Another.point.position;
+            entity.transform.position = another.point.position;
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (another)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(transform.position, another.transform.position);
         }
     }
 }

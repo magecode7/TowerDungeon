@@ -36,6 +36,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -51,6 +52,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -105,7 +107,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.5}
   m_Size: {x: 0.7, y: 0.75}
   m_Direction: 0
 --- !u!58 &4605337283273701263
@@ -121,7 +123,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.2}
+  m_Offset: {x: 0, y: 0.3}
   serializedVersion: 2
   m_Radius: 0.3
 --- !u!50 &102386356355528459
@@ -147,7 +149,7 @@ Rigidbody2D:
   m_Constraints: 4
 --- !u!95 &102386356355528452
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -160,10 +162,11 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &6577814576859523905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +186,10 @@ MonoBehaviour:
     type: 3}
   shakeAmplitude: 0.2
   shakeDuration: 0.2
+  damageSound: {fileID: 8300000, guid: b9d44892d862624448d2ea1b57fd30bf, type: 3}
+  dieEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &102386356355528456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,10 +208,11 @@ MonoBehaviour:
     mask:
       serializedVersion: 2
       m_Bits: 768
-    offset: {x: 0, y: -0.6}
+    offset: {x: 0, y: -0.1}
     size: {x: 0.5, y: 0.2}
     direction: {x: 0, y: 0}
     distance: 0
+  jumpSound: {fileID: 8300000, guid: 38065e40489f35b42a42164b49af9c00, type: 3}
 --- !u!114 &3032973559055268695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +229,7 @@ MonoBehaviour:
     mask:
       serializedVersion: 2
       m_Bits: 1024
-    offset: {x: 0.5, y: 0}
+    offset: {x: 0.5, y: 0.5}
     size: {x: 1, y: 0.75}
     direction: {x: 0, y: 0}
     distance: 0
@@ -247,22 +255,22 @@ MonoBehaviour:
     mask:
       serializedVersion: 2
       m_Bits: 1024
-    offset: {x: 0, y: 0}
-    size: {x: 12, y: 4}
+    offset: {x: 3, y: 1}
+    size: {x: 8, y: 3}
     direction: {x: 0, y: 0}
     distance: 0
   wallSensor:
     mask:
       serializedVersion: 2
       m_Bits: 7936
-    offset: {x: 0.5, y: 0}
+    offset: {x: 0.5, y: 0.5}
     direction: {x: 1, y: 0}
     distance: 0.2
   floorSensor:
     mask:
       serializedVersion: 2
       m_Bits: 768
-    offset: {x: 0.7, y: -0.3}
+    offset: {x: 0.7, y: 0}
     direction: {x: 0, y: -1}
     distance: 0.5
 --- !u!114 &5482072695524740640
@@ -277,10 +285,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac5d6a1e6ea2d54597d5b7ac2b86631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropPosition: {x: 0, y: 0.5}
+  dropRadius: 0.5
   drops:
   - item: {fileID: 8508080075348617347, guid: e1974498d39662548ac21d7ac3fb69cf, type: 3}
     minCount: 1
     maxCount: 5
     chance: 1
+    minDropForce: 4
+    maxDropForce: 6
+  - item: {fileID: 8508080075348617347, guid: c9e09a99e74aa3f4b95462ab401b8475, type: 3}
+    minCount: 1
+    maxCount: 1
+    chance: 0.2
     minDropForce: 4
     maxDropForce: 6

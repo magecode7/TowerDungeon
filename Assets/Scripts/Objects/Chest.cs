@@ -5,6 +5,7 @@ using UnityEngine;
 public class Chest : MonoBehaviour, IInteractive
 {
     [SerializeField] private Dropper dropper;
+    [SerializeField] private GameObject particles;
     private Animator animator;
 
     private bool opened = false;
@@ -14,6 +15,7 @@ public class Chest : MonoBehaviour, IInteractive
         if (!opened)
         {
             dropper.RealizeDrop();
+            particles.SetActive(false);
             opened = true;
         }
         animator.SetBool("Opened", opened);

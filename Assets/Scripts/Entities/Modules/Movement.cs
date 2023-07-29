@@ -6,6 +6,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5;
     [SerializeField] private float jumpImpulse = 10;
     [SerializeField] private RectSensor groundSensor = new RectSensor();
+    [SerializeField] private AudioClip jumpSound;
     private Timer stunTimer = new Timer();
 
     public bool IsGrounded { get; private set; }
@@ -60,6 +61,8 @@ public class Movement : MonoBehaviour
             Vector2 velocity = RB.velocity;
             velocity = new Vector2(velocity.x, jumpImpulse);
             RB.velocity = velocity;
+
+            SoundManager.I.Play(jumpSound);
         }
     }
 
