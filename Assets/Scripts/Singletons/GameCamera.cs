@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameCamera : MonoBehaviour
 {
+    [SerializeField] private float cameraSpeed = 2;
+
     private float shakeAmplitude = 1;
     private Timer shakeTimer = new Timer();
     private Timer focusTimer = new Timer();
@@ -28,8 +30,8 @@ public class GameCamera : MonoBehaviour
             teleport = false;
         }
         position = !focusTimer.IsOut
-            ? Vector2.Lerp(position, focusPosition, 0.01f)
-            : Vector2.Lerp(position, Player.player.transform.position, 0.01f);
+            ? Vector2.Lerp(position, focusPosition, cameraSpeed * Time.deltaTime)
+            : Vector2.Lerp(position, Player.player.transform.position, cameraSpeed * Time.deltaTime);
 
         transform.position = !shakeTimer.IsOut 
             ? position + (Vector3)Random.insideUnitCircle * shakeAmplitude 
