@@ -12,6 +12,8 @@ public class MeleeCombat : Combat
     {
         yield return new WaitForSeconds(damageDelay);
 
+        if (gameObject.TryGetComponent(out Entity entity)) if (!entity.CanDo) yield break;
+
         sensor.Flip(transform.localScale.x);
         RaycastHit2D[] hits = sensor.CastAll(transform.position);
 

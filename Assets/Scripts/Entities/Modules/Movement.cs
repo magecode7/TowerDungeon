@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private AudioClip jumpSound;
     private Timer stunTimer = new Timer();
 
+    public bool Downside { get; private set; }
     public bool IsGrounded { get; private set; }
     public bool IsMove { get; private set; }
     public bool IsStunned => !stunTimer.IsOut;
@@ -79,6 +80,16 @@ public class Movement : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x = right ? 1 : -1;
         transform.localScale = localScale;
+    }
+
+    public void JumpOff(bool downside)
+    {
+        Downside = downside;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.otherCollider.tag == "Platform" || collision.collider.tag == "Platform") Physics2D.IgnoreCollision(collision.collider, collision.otherCollider, Downside);
     }
 
     private void OnDrawGizmosSelected()

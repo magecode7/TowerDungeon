@@ -9,6 +9,8 @@ public enum InputType
     None,
     Left,
     Right,
+    Up,
+    Down,
     Jump,
     Attack,
     Ability,
@@ -30,7 +32,7 @@ public class InputEvent
 
 public class PlayerInput
 {
-    static InputEvent[] events = new InputEvent[7];
+    static InputEvent[] events = new InputEvent[9];
 
     public static InputEvent GetEvent(InputType type)
     {

@@ -35,4 +35,9 @@ public class Entity : MonoBehaviour
     {
         if (CanDo) Combat.Attack();
     }
+
+    public void JumpOff(bool downside)
+    {
+        if (CanDo) Movement.JumpOff(downside);
+    }
 }

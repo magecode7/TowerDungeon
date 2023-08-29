@@ -13,6 +13,7 @@ public class MusicManager : MonoBehaviour
         I = this;
 
         audioSource = GetComponent<AudioSource>();
+        SetVolume(PlayerPrefs.GetFloat(SettingsMenu.MusicVolumeKey, 1f));
     }
 
     public void SetLocationMusic(AudioClip music)

@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
         I = this;
 
         audioSource = GetComponent<AudioSource>();
+        SetVolume(PlayerPrefs.GetFloat(SettingsMenu.SoundVolumeKey, 1f));
     }
 
     public void Play(AudioClip sound)

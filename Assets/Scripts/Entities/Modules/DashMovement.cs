@@ -5,16 +5,18 @@ public class DashMovement : Movement
 {
     [SerializeField] private Timer dash = new Timer();
     [SerializeField] private float dashSpeed = 10;
-    [SerializeField] private Timer dashCooldown = new Timer();
+    [SerializeField] private float maxDashEnergy = 1;
+    [SerializeField] private float dashEnergyConsume = 1;
+    [SerializeField] private float dashEnergyRecoverSpeed = 1;
 
-    private int dashTimes = 0;
-    [SerializeField] private int maxDashTimes = 1;
+    private float dashEnergy = 0;
+
+    public float DashCooldown => DashEnergy / maxDashEnergy;
+    public float DashEnergy { get => dashEnergy; set => dashEnergy = Mathf.Clamp(value, 0, maxDashEnergy); }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-
-        if (IsGrounded) dashTimes = 0;
 
         if (!dash.IsOut)
         {
@@ -22,14 +24,18 @@ public class DashMovement : Movement
         }
     }
 
+    private void Update()
+    {
+        DashEnergy += dashEnergyRecoverSpeed * Time.deltaTime;
+    }
+
     public void Dash()
     {
-        if (dash.IsOut && dashCooldown.IsOut && dashTimes < maxDashTimes)
+        if (dash.IsOut && DashEnergy >= dashEnergyConsume)
         {
-            dashTimes++;
+            DashEnergy -= dashEnergyConsume;
             Stun(dash.Time);
             dash.Start();
-            dashCooldown.Start();
 
             Animator.SetTrigger("Dash");
         }

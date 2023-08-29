@@ -43,6 +43,8 @@ public class Player : Entity
         if (PlayerInput.Get(InputType.Ability)) Dash();
         if (PlayerInput.Get(InputType.Left) && !PlayerInput.Get(InputType.Right)) Move(Vector2.left);
         if (PlayerInput.Get(InputType.Right) && !PlayerInput.Get(InputType.Left)) Move(Vector2.right);
+
+        JumpOff(PlayerInput.Get(InputType.Down));
         if (PlayerInput.GetDown(InputType.Jump)) Jump();
         if (PlayerInput.GetDown(InputType.Attack)) Attack();
         if (PlayerInput.GetDown(InputType.Interact)) Interact();
