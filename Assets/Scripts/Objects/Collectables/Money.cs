@@ -8,15 +8,18 @@ public class Money : Collectable
 
     protected override void FixedUpdate()
     {
-        RaycastHit2D playerHit = collectTrigger.Cast(transform.position);
-        if (playerHit)
+        if (collectTimer.IsOut)
         {
-            if (playerHit.transform.TryGetComponent(out Player player))
+            RaycastHit2D playerHit = collectTrigger.Cast(transform.position);
+            if (playerHit)
             {
-                player.Money += moneyCount;
-                SoundManager.I.Play(collectSound);
+                if (playerHit.transform.TryGetComponent(out Player player))
+                {
+                    player.Money += moneyCount;
+                    SoundManager.I.Play(collectSound);
 
-                Destroy(gameObject);
+                    Destroy(gameObject);
+                }
             }
         }
     }

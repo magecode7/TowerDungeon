@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private RectSensor groundSensor = new RectSensor();
     [SerializeField] private AudioClip jumpSound;
     private Timer stunTimer = new Timer();
+    private Collider2D lastPlatformCollider;
 
     public bool Downside { get; private set; }
     public bool IsGrounded { get; private set; }
@@ -16,11 +17,13 @@ public class Movement : MonoBehaviour
 
     protected Rigidbody2D RB { get; private set; }
     protected Animator Animator { get; private set; }
+    protected Collider2D Coll { get; private set; }
 
     protected virtual void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
+        Coll = GetComponent<Collider2D>();
     }
 
     protected virtual void LateUpdate()
@@ -89,8 +92,32 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.otherCollider.tag == "Platform" || collision.collider.tag == "Platform") Physics2D.IgnoreCollision(collision.collider, collision.otherCollider, Downside);
+        if (collision.collider.CompareTag("Platform"))
+        {
+            if (lastPlatformCollider != collision.collider)
+            {
+                if (lastPlatformCollider != null)
+                {
+                    Physics2D.IgnoreCollision(Coll, lastPlatformCollider, false);
+                }
+                lastPlatformCollider = collision.collider;
+            }
+
+            if (Downside)
+            {
+                Physics2D.IgnoreCollision(Coll, lastPlatformCollider, true);
+            }
+        }
+        else
+        {
+            if (lastPlatformCollider != null)
+            {
+                Physics2D.IgnoreCollision(Coll, lastPlatformCollider, false);
+                lastPlatformCollider = null;
+            }
+        }
     }
+
 
     private void OnDrawGizmosSelected()
     {
