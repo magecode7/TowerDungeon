@@ -10,7 +10,7 @@ public class Enemy : Entity
 
     private Vector2 moveDirection = Vector2.right;
     private Vector2 lastPlayerPosition;
-    
+
 
     protected override void FixedUpdate()
     {
@@ -50,7 +50,7 @@ public class Enemy : Entity
             Move(moveDirection);
             FlipSensors();
 
-            if (direction.y > 1 && direction.sqrMagnitude < 4) Jump();
+            if (direction.y > 2 && direction.sqrMagnitude < 4) Jump();
             else
             {
                 RaycastHit2D wallHit = wallSensor.Cast(transform.position);

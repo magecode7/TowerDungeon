@@ -17,6 +17,7 @@ public class RoomsGenerator : MonoBehaviour
         battleRoomsPrefabs,
         specialRoomsPrefabs,
         bossRoomsPrefabs;
+    [SerializeField] private float specialRoomChance = 0.2f;
     private int currentRoomNumber = 0;
     private Room currentRoom;
 
@@ -44,13 +45,20 @@ public class RoomsGenerator : MonoBehaviour
         currentRoomNumber++;
         if (currentRoomNumber < maxCount)
         {
-            currentRoom = GenerateRoom(GetRandomRoom(battleRoomsPrefabs));
+            if (Random.value < specialRoomChance)
+            {
+                currentRoom = GenerateRoom(GetRandomRoom(specialRoomsPrefabs));
+            }
+            else
+            {
+                currentRoom = GenerateRoom(GetRandomRoom(battleRoomsPrefabs));
+            }
         }
         else
         {
             currentRoom = GenerateRoom(GetRandomRoom(bossRoomsPrefabs));
         }
-        
+
         return currentRoom;
     }
 
@@ -59,5 +67,5 @@ public class RoomsGenerator : MonoBehaviour
         return Instantiate(prefab, (Vector2)currentRoom.transform.position + new Vector2(0, currentRoom.height / 2 + prefab.height / 2), Quaternion.identity, transform);
     }
 
-    Room GetRandomRoom(Room[] rooms) => rooms[Random.Range(0, rooms.Length)]; 
+    Room GetRandomRoom(Room[] rooms) => rooms[Random.Range(0, rooms.Length)];
 }

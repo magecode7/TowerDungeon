@@ -17,13 +17,11 @@ public class Movement : MonoBehaviour
 
     protected Rigidbody2D RB { get; private set; }
     protected Animator Animator { get; private set; }
-    protected Collider2D Coll { get; private set; }
 
     protected virtual void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
-        Coll = GetComponent<Collider2D>();
     }
 
     protected virtual void LateUpdate()
@@ -92,27 +90,27 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Platform"))
+        if (collision.otherCollider.CompareTag("Platform") || collision.collider.CompareTag("Platform"))
         {
             if (lastPlatformCollider != collision.collider)
             {
                 if (lastPlatformCollider != null)
                 {
-                    Physics2D.IgnoreCollision(Coll, lastPlatformCollider, false);
+                    Physics2D.IgnoreCollision(collision.otherCollider, lastPlatformCollider, false);
                 }
                 lastPlatformCollider = collision.collider;
             }
 
             if (Downside)
             {
-                Physics2D.IgnoreCollision(Coll, lastPlatformCollider, true);
+                Physics2D.IgnoreCollision(collision.otherCollider, lastPlatformCollider, true);
             }
         }
         else
         {
             if (lastPlatformCollider != null)
             {
-                Physics2D.IgnoreCollision(Coll, lastPlatformCollider, false);
+                Physics2D.IgnoreCollision(collision.otherCollider, lastPlatformCollider, false);
                 lastPlatformCollider = null;
             }
         }
