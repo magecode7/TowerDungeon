@@ -50,7 +50,7 @@ public class Enemy : Entity
             Move(moveDirection);
             FlipSensors();
 
-            if (direction.y > 2 && direction.sqrMagnitude < 4) Jump();
+            if (direction.y > 1 && direction.sqrMagnitude < 16) Jump();
             else
             {
                 RaycastHit2D wallHit = wallSensor.Cast(transform.position);

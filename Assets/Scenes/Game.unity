@@ -2008,8 +2008,9 @@ MonoBehaviour:
   maxCount: 10
   startRoomsPath: Dungeon/Start Rooms
   battleRoomsPath: Dungeon/Battle Rooms
-  specialRoomsPath: 
+  specialRoomsPath: Dungeon/Special Rooms
   bossRoomsPath: Dungeon/Boss Rooms
+  specialRoomChance: 0.5
 --- !u!1 &1310929524
 GameObject:
   m_ObjectHideFlags: 0
